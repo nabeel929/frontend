@@ -25,6 +25,7 @@ function FilterSortJob() {
     };
     fetchJobs();
   }, [filters]);
+  console.log('Jobs fetched:', jobs);
 
   const handleFilterChange = (e) => {
     setFilters({ ...filters, [e.target.name]: e.target.value, page: 1 });
@@ -63,7 +64,15 @@ function FilterSortJob() {
                 <h3>{job.title}</h3>
                 <p>{job.company} - {job.location}</p>
                 <p>{job.salary}</p>
-                <p>{job.description}</p>
+                
+                <p>
+  {job.description
+    ?.replace(/<[^>]*>?/gm, '') 
+    .split('. ')
+    .slice(0, 1)
+    .join('. ') + '.'}
+</p>
+
                 <button onClick={() => navigate(`/edit-job/${job.id}`)}>Edit</button>
                 <button onClick={() => navigate(`/delete-job/${job.id}`)}>Delete</button>
               </div>
